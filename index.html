@@ -1079,28 +1079,29 @@
       </div>
       <div class="row">
         <div class="contact-form">
-          <form action="">
+          <form action="https://formsubmit.co/f20202418@hyderabad.bits-pilani.ac.in" method="POST">
             <div class="row">
               <div class="w-50">
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <input type="text" placeholder="Name" class="input-control">
+                  <input type="text" name="name" placeholder="Name" class="input-control" required>
                 </div>
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <input type="text" placeholder="Email" class="input-control">
+                  <input type="text" name="email"  placeholder="Email" class="input-control" required>
                 </div>
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <input type="text" placeholder="Subject" class="input-control">
+                  <input type="text" name="subject" placeholder="Subject" class="input-control">
                 </div>
               </div>
               <div class="w-50">
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <textarea placeholder="Message" id="" class="input-control"></textarea>
+                  <textarea placeholder="Message" name="message" id="" class="input-control" required></textarea>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="submit-btn">
-                <button type="button" class="btn-1 outer-shadow hover-in-shadow">Send Message</button>
+                <button type="submit" class="btn-1 outer-shadow hover-in-shadow">Send Message</button>
+                <input type="hidden" name="_captcha" value="false">
               </div>
             </div>
           </form>
