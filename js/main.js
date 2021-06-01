@@ -1,10 +1,101 @@
 console.log(`This is Anish's Portfolio Website`);
 
+/* ------------------navigation menu------------------ */
+
+(() => {
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    navMenu = document.querySelector('.nav-menu');
+    closeNavBtn = navMenu.querySelector('.close-nav-menu');
+
+    hamburgerBtn.addEventListener('click', showNavMenu);
+    closeNavBtn.addEventListener('click', hideNavMenu);
+
+    function showNavMenu() {
+        navMenu.classList.add('open');
+    }
+
+    function hideNavMenu() {
+        navMenu.classList.remove('open');
+        fadeOutEffect();
+    }
+
+    function fadeOutEffect() {
+        document.querySelector('.fade-out-effect').classList.add('active');
+        setTimeout(() => {
+            document.querySelector('.fade-out-effect').classList.remove('active');
+
+        }, 300);
+    }
+
+
+    // attach an event handler to the document
+    document.addEventListener('click', (event) => {
+        // console.log(event.target);
+        if (event.target.classList.contains('link-item')) {
+            // console.log("event.target contains 'link-item' class");
+            // console.log(event.target.hash);
+            // this will return output as #about, #testimonail, #contact
+
+
+            // make sure that event.target.hash has a value before overriding deafult behavior
+            if (event.target.hash !== '') {
+                event.preventDefault();
+                const hash = event.target.hash;
+                // console.log(hash);
+                // deactivate existing active section
+                document.querySelector('section.active').classList.add('hide');
+                document.querySelector('section.active').classList.remove('active');
+                // activating active section
+                document.querySelector(hash).classList.add('active');
+                document.querySelector(hash).classList.remove('hide');
+
+                // deactivate existing active navigation menu 'link-item'
+                navMenu.querySelector('.active').classList.add('outer-shadow', 'hover-in-shadow');
+                navMenu.querySelector('.active').classList.remove('active', 'inner-shadow');
+
+                // if clicked linkitem is within the navigation menu
+                if (navMenu.classList.contains('open')) {
+
+                    // activate new navigation menu link-item 
+                    event.target.classList.add('active', 'inner-shadow');
+                    event.target.classList.remove('outer-shadow', 'hover-in-shadow');
+
+                    // hide navigation menu
+                    hideNavMenu();
+                    // console.log('clicked linkitem is within the navigation menu');
+
+                } else {
+                    // console.log('clicked linkitem isnot within the navigation menu');
+                    let navItems = navMenu.querySelectorAll('.link-item');
+                    navItems.forEach((item) => {
+                        if (hash === item.hash) {
+                            // activate new navigation menu link-item
+                            item.classList.add('active', 'inner-shadow');
+                            item.classList.remove('outer-shadow', 'hover-in-shadow');
+                        }
+                    })
+                    fadeOutEffect();
+                }
+                // addhash (#) to url
+                window.location.hash =hash;
+            }
+
+        } else {
+            // console.log("event.target does not contain 'link-item' class");
+
+        }
+
+    })
+
+})();
+
+
+
 /* ------------------about section tabs------------------ */
 
 (() => {
     const aboutSection = document.querySelector(".about-section"),
-        tabsContainer = document.querySelector(".about-tabs");
+    tabsContainer = document.querySelector(".about-tabs");
 
     tabsContainer.addEventListener('click', (event) => {
         // console.log(event.target)
@@ -136,10 +227,9 @@ function bodyScrollingToggle() {
 
     // next slide
     nextBtn.addEventListener('click', () => {
-        if (slideIndex === screenshots.length-1) {
+        if (slideIndex === screenshots.length - 1) {
             slideIndex = 0;
-        } 
-        else {
+        } else {
             slideIndex++;
         }
         popupSlideshow();
@@ -202,6 +292,100 @@ function bodyScrollingToggle() {
         }
 
     }
+
+
+
+    /* ----------------------------testimonial slider----------------------------*/
+
+    (() => {
+        // console.log('hello');
+        const sliderContainer = document.querySelector('.testi-slider-container');
+        slides = sliderContainer.querySelectorAll('.testi-item');
+        // console.log(slides);
+        slideWidth = sliderContainer.offsetWidth;
+        // console.log(slideWidth);
+        prevBtn = document.querySelector('.testi-slider-nav .prev');
+        nextBtn = document.querySelector('.testi-slider-nav .next');
+        activeSlide = sliderContainer.querySelector('.testi-item.active');
+        let slideIndex = Array.from(activeSlide.parentElement.children).indexOf(activeSlide);
+        // console.log(slideIndex);
+
+
+        // set width of all sides 
+        slides.forEach((slide) => {
+            // console.log(slide);
+            slide.style.width = slideWidth + "px";
+        })
+
+        // seet width of slider Container
+        sliderContainer.style.width = slideWidth * slides.length + "px";
+
+        nextBtn.addEventListener('click', () => {
+            if (slideIndex === slides.length - 1) {
+                slideIndex = 0;
+            } else {
+                slideIndex++;
+            }
+            // console.log(slideIndex);
+            // the output will be 1, 2, 3, 0, 1, 2
+            slider();
+        })
+
+        prevBtn.addEventListener('click', () => {
+            if (slideIndex === 0) {
+                slideIndex = slides.length - 1;
+            } else {
+                slideIndex--
+            }
+            console.log(slideIndex);
+            // the output will be 3, 2, 1, 0, 3
+            slider();
+        })
+
+        function slider() {
+            // deactivate existing active slides
+            sliderContainer.querySelector('.testi-item.active').classList.remove('active');
+
+            // activate new slide 
+            slides[slideIndex].classList.add('active')
+            sliderContainer.style.marginLeft = -(slideWidth * slideIndex) + 'px';
+        }
+        slider();
+
+
+    })();
+
+
+    /* ----------------------------hide all sections except active----------------------------*/
+
+    (() => {
+
+        // console.log('hii');
+        const sections = document.querySelectorAll('.section');
+        // console.log(sections);
+        sections.forEach((section) => {
+            if (!section.classList.contains('active')) {
+                section.classList.add('hide');
+
+            }
+        })
+
+
+
+
+    })();
+
+    /* ----------------------------preloader----------------------------*/
+
+    // (()=>{
+        window.addEventListener('load', () =>{
+            // preloader
+            document.querySelector('.preloader').classList.add('fade-out');
+            setTimeout(() => {
+            document.querySelector('.preloader').style.display = 'none';
+            }, 1200);
+        })
+    // })();
 
 
 
