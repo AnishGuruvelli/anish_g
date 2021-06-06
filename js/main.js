@@ -357,7 +357,8 @@ function bodyScrollingToggle() {
 
 
     /* ----------------------------hide all sections except active----------------------------*/
-
+    
+/*
     (() => {
 
         // console.log('hii');
@@ -374,7 +375,8 @@ function bodyScrollingToggle() {
 
 
     })();
-
+*/
+    
     /* ----------------------------preloader----------------------------*/
 
     // (()=>{
